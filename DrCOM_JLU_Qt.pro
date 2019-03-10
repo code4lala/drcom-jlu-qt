@@ -29,14 +29,20 @@ SOURCES += \
         mainwindow.cpp \
     dogcomcontroller.cpp \
     interruptiblesleeper.cpp \
-    dogcom.cpp
+    dogcom.cpp \
+    encrypt/md4.cpp \
+    encrypt/md5.cpp \
+    encrypt/sha1.cpp
 
 HEADERS += \
         mainwindow.h \
     dogcomcontroller.h \
     constants.h \
     interruptiblesleeper.h \
-    dogcom.h
+    dogcom.h \
+    encrypt/md4.h \
+    encrypt/md5.h \
+    encrypt/sha1.h
 
 FORMS += \
         mainwindow.ui

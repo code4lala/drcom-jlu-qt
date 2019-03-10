@@ -17,9 +17,11 @@ public:
 public slots:
     void HandleDogcomOffline(int reason);
     void HandleDogcomOnline();
+    void HandleIpAddress(unsigned char x1,unsigned char x2,unsigned char x3,unsigned char x4);
 signals:
     void HaveBeenOffline(int reason);
     void HaveLoggedIn();
+    void HaveObtainedIp(const QString &ip);
 private:
     InterruptibleSleeper *sleeper;
     DogCom *dogcom;

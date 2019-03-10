@@ -11,6 +11,8 @@
 #include <QWindow>
 #include "constants.h"
 #include <QMessageBox>
+#include <QDesktopServices>
+#include <QUrl>
 
 MainWindow::MainWindow(QWidget *parent) :
     QDialog(parent),
@@ -236,28 +238,80 @@ void MainWindow::GetInputs(){
     mac_addr=mac_addr.remove(17,mac_addr.length()).toUpper();
     remember=ui->checkBoxRemember->checkState();
     auto_login=ui->checkBoxAutoLogin->checkState();
-//    qDebug()<<"account:"<<account;
-//    qDebug()<<"password:"<<password;
-//    qDebug()<<"mac_addr:"<<mac_addr;
-//    qDebug()<<"remember:"<<remember;
-//    qDebug()<<"auto_login:"<<auto_login;
-//    qDebug()<<endl;
 }
 
 void MainWindow::HandleOffline(int reason)
 {
+    ui->pushButtonLogin->setText("Login");
     switch (reason) {
-    case OFF_UNKNOWN:{
+    case OFF_USER_LOGOUT:{
+        QMessageBox::critical(this,tr("Logout succeed"),tr("Logout succeed"));
+        break;
+    }
+    case OFF_BIND_FAILED:{
+        QMessageBox::critical(this,tr("Login failed"),tr("Binding port failed. Please check if there are other clients occupying the port"));
+        break;
+    }
+    case OFF_CHALLENGE_FAILED:{
+        QMessageBox::critical(this,tr("Login failed"),tr("Challenge failed. Please check your connection:)"));
+        break;
+    }
+    case OFF_CHECK_MAC:{
+        QMessageBox::critical(this,tr("Login failed"),tr("Someone is using this account with wired"));
+        break;
+    }
+    case OFF_SERVER_BUSY:{
+        QMessageBox::critical(this,tr("Login failed"),tr("The server is busy, please log back in again"));
         break;
     }
     case OFF_WRONG_PASS:{
-        QMessageBox::critical(this, tr("Login failed"), tr("Wrong password!"));
+        QMessageBox::critical(this,tr("Login failed"),tr("Account and password not match"));
         break;
     }
-    case OFF_WRONG_MAC:{
+    case OFF_NOT_ENOUGH:{
+        QMessageBox::critical(this,tr("Login failed"),tr("The cumulative time or traffic for this account has exceeded the limit"));
         break;
     }
-    default:break;
+    case OFF_FREEZE_UP:{
+        QMessageBox::critical(this,tr("Login failed"),tr("This account is suspended"));
+        break;
+    }
+    case OFF_NOT_ON_THIS_IP:{
+        QMessageBox::critical(this,tr("Login failed"),tr("IP address does not match, this account can only be used in the specified IP address"));
+        break;
+    }
+    case OFF_NOT_ON_THIS_MAC:{
+        QMessageBox::critical(this,tr("Login failed"),tr("MAC address does not match, this account can only be used in the specified IP and MAC address"));
+        break;
+    }
+    case OFF_TOO_MUCH_IP:{
+        QMessageBox::critical(this,tr("Login failed"),tr("This account has too many IP addresses"));
+        break;
+    }
+    case OFF_UPDATE_CLIENT:{
+        QMessageBox::critical(this,tr("Login failed"),tr("The client version is incorrect"));
+        break;
+    }
+    case OFF_NOT_ON_THIS_IP_MAC:{
+        QMessageBox::critical(this,tr("Login failed"),tr("This account can only be used on specified MAC and IP address"));
+        break;
+    }
+    case OFF_MUST_USE_DHCP:{
+        QMessageBox::critical(this,tr("Login failed"),tr("Your PC set up a static IP, please change to DHCP, and then re-login"));
+        break;
+    }
+    case OFF_TIMEOUT:{
+        QMessageBox::critical(this,tr("You have been offline"),tr("Time out, please check your connection"));
+        break;
+    }
+    case OFF_DHCP_LOGIN_FAILED:{
+        QMessageBox::critical(this,tr("Login failed"),tr("Qt reported that it can not receive packets from the server but I don't think so"));
+        break;
+    }
+    case OFF_UNKNOWN:
+    default:
+        QMessageBox::critical(this, tr("You have been offline"), tr("Unknow reason"));
+        break;
     }
     if(reason==OFF_WRONG_PASS){
         // 清除已保存的密码
@@ -276,6 +330,8 @@ void MainWindow::HandleOffline(int reason)
 
 void MainWindow::HandleLoggedIn()
 {
+    // 显示欢迎页
+    QDesktopServices::openUrl(QUrl("http://login.jlu.edu.cn/notice.php"));
     // 登录成功，保存密码
     if(remember){
         SaveSettings();
@@ -287,6 +343,11 @@ void MainWindow::HandleLoggedIn()
     SetIcon(true);
     // 启用注销按钮
     DisableLogOutButton(false);
+}
+
+void MainWindow::HandleIpAddress(const QString &ip)
+{
+    ui->pushButtonLogin->setText(ip);
 }
 
 void MainWindow::UserLogOut()

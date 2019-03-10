@@ -35,6 +35,7 @@ private slots:
 public slots:
     void HandleOffline(int reason);
     void HandleLoggedIn();
+    void HandleIpAddress(const QString &ip);
     void ShowLoginWindow();
 
 private:

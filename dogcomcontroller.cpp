@@ -8,6 +8,7 @@ DogcomController::DogcomController()
 
     connect(dogcom,&DogCom::ReportOnline,this,&DogcomController::HandleDogcomOnline);
     connect(dogcom,&DogCom::ReportOffline,this,&DogcomController::HandleDogcomOffline);
+    connect(dogcom,&DogCom::ReportIpAddress,this,&DogcomController::HandleIpAddress);
 }
 
 void DogcomController::Login(const QString &account,const QString &password,const QString &mac_addr){
@@ -34,3 +35,12 @@ void DogcomController::HandleDogcomOnline()
 {
     emit HaveLoggedIn();
 }
+
+void DogcomController::HandleIpAddress(unsigned char x1, unsigned char x2, unsigned char x3, unsigned char x4)
+{
+    QString ip=QString::asprintf("%d.%d.%d.%d",x1,x2,x3,x4);
+    qDebug()<<"IP ADDRESS:"<<ip;
+    emit HaveObtainedIp(ip);
+}
+
+
