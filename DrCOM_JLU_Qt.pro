@@ -58,3 +58,8 @@ RESOURCES += \
 # Single Application implementation
 include(.\singleinstance\singleapplication.pri)
 DEFINES += QAPPLICATION_CLASS=QApplication
+
+# QtKeyChain inplementation
+include(.\qtkeychain\qt5keychain.pri)
+
+DISTFILES +=
