@@ -13,12 +13,17 @@
 #include <QMessageBox>
 #include <QDesktopServices>
 #include <QUrl>
+#include <QCloseEvent>
 
 MainWindow::MainWindow(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    // 记住窗口大小功能
+    QSettings settings;
+    restoreGeometry(settings.value("mainWindowGeometry").toByteArray());
 
     // 获取mac地址
     foreach(QNetworkInterface i, QNetworkInterface::allInterfaces()){
@@ -75,6 +80,11 @@ MainWindow::MainWindow(QWidget *parent) :
     if(auto_login){
         ui->pushButtonLogin->click();
     }
+}
+
+void MainWindow::closeEvent(QCloseEvent *event){
+  QSettings settings;
+  settings.setValue("mainWindowGeometry", saveGeometry());
 }
 
 void MainWindow::ShowLoginWindow(){

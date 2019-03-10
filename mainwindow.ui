@@ -10,120 +10,114 @@
     <height>400</height>
    </rect>
   </property>
-  <property name="minimumSize">
-   <size>
-    <width>500</width>
-    <height>400</height>
-   </size>
-  </property>
-  <property name="maximumSize">
-   <size>
-    <width>500</width>
-    <height>400</height>
-   </size>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>DrCOM JLU Qt</string>
   </property>
-  <widget class="QWidget" name="centralWidget">
-   <widget class="QWidget" name="verticalLayoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>40</x>
-      <y>20</y>
-      <width>421</width>
-      <height>291</height>
-     </rect>
-    </property>
-    <layout class="QVBoxLayout" name="verticalLayoutOutside">
-     <item>
-      <layout class="QGridLayout" name="gridLayoutInput">
-       <item row="1" column="1">
-        <widget class="QLineEdit" name="lineEditPass">
-         <property name="echoMode">
-          <enum>QLineEdit::Password</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <widget class="QLineEdit" name="lineEditMAC"/>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="labelMAC">
-         <property name="text">
-          <string>MAC</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="labelAccount">
-         <property name="text">
-          <string>Account</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QLineEdit" name="lineEditAccount"/>
-       </item>
-       <item row="2" column="1">
-        <widget class="QComboBox" name="comboBoxMAC"/>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="labelPass">
-         <property name="text">
-          <string>Password</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QGridLayout" name="gridLayoutCheck">
-       <item row="0" column="0">
-        <widget class="QCheckBox" name="checkBoxRemember">
-         <property name="text">
-          <string>Remember</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QCheckBox" name="checkBoxAutoLogin">
-         <property name="text">
-          <string>AutoLogin</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pushButtonLogin">
-       <property name="text">
-        <string>Login</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-  </widget>
-  <widget class="QMenuBar" name="menuBar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>500</width>
-     <height>25</height>
-    </rect>
-   </property>
-   <widget class="QMenu" name="menuAbout">
-    <property name="title">
-     <string>About</string>
-    </property>
-    <addaction name="actionDrCOM_JLU_version"/>
-    <addaction name="actionQt"/>
-   </widget>
-   <addaction name="menuAbout"/>
-  </widget>
-  <widget class="QStatusBar" name="statusBar"/>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <item>
+    <widget class="QMenuBar" name="menuBar">
+     <widget class="QMenu" name="menuAbout">
+      <property name="title">
+       <string>About</string>
+      </property>
+      <addaction name="actionDrCOM_JLU_version"/>
+      <addaction name="actionQt"/>
+     </widget>
+     <addaction name="menuAbout"/>
+    </widget>
+   </item>
+   <item>
+    <widget class="QWidget" name="centralWidget" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayoutOutside">
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <layout class="QGridLayout" name="gridLayoutInput">
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="lineEditPass">
+            <property name="echoMode">
+             <enum>QLineEdit::Password</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QLineEdit" name="lineEditMAC"/>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="labelMAC">
+            <property name="text">
+             <string>MAC</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="labelAccount">
+            <property name="text">
+             <string>Account</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="lineEditAccount"/>
+          </item>
+          <item row="2" column="1">
+           <widget class="QComboBox" name="comboBoxMAC"/>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="labelPass">
+            <property name="text">
+             <string>Password</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QGridLayout" name="gridLayoutCheck">
+          <item row="0" column="0">
+           <widget class="QCheckBox" name="checkBoxRemember">
+            <property name="text">
+             <string>Remember</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QCheckBox" name="checkBoxAutoLogin">
+            <property name="text">
+             <string>AutoLogin</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButtonLogin">
+          <property name="text">
+           <string>Login</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
   <action name="actionDrCOM_JLU_version">
    <property name="text">
     <string>DrCOM JLU Qt</string>

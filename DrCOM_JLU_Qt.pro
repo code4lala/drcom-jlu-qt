@@ -54,3 +54,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     DrCOM_JLU_Qt.qrc
+
+# Single Application implementation
+include(.\singleinstance\singleapplication.pri)
+DEFINES += QAPPLICATION_CLASS=QApplication

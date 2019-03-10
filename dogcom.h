@@ -28,10 +28,10 @@ private:
     bool log;
     void print_packet(const char msg[10], const unsigned char *packet, int length);
     int dhcp_login(QUdpSocket &udp_sender,unsigned char seed[],unsigned char auth_information[]);
-    int keepalive_1(QUdpSocket &udp_sender, unsigned char seed[], unsigned char auth_information[]);
+    int keepalive_1(QUdpSocket &udp_sender, unsigned char auth_information[]);
     int keepalive_2(QUdpSocket &udp_sender, int *keepalive_counter, int *first);
     void gen_crc(unsigned char seed[], int encrypt_type, unsigned char crc[]);
-    void keepalive_2_packetbuilder(unsigned char keepalive_2_packet[], int keepalive_counter, int filepacket, int type, int encrypt_type);
+    void keepalive_2_packetbuilder(unsigned char keepalive_2_packet[], int keepalive_counter, int filepacket, int type);
 
 
 signals:

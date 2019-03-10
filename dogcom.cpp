@@ -80,7 +80,7 @@ void DogCom::run()
             int keepalive_try_counter = 0;
             int first = 1;
             while (true) {
-                if (!keepalive_1(udp_sender, seed, auth_information)) {
+                if (!keepalive_1(udp_sender, auth_information)) {
                     sleeper->Sleep(200); // 0.2 second
                     if (keepalive_2(udp_sender, &keepalive_counter, &first)) {
                         continue;
@@ -362,7 +362,7 @@ int DogCom::dhcp_login(QUdpSocket &udp_sender, unsigned char seed[], unsigned ch
     return -1;
 }
 
-int DogCom::keepalive_1(QUdpSocket &udp_sender, unsigned char seed[], unsigned char auth_information[])
+int DogCom::keepalive_1(QUdpSocket &udp_sender, unsigned char auth_information[])
 {
     unsigned char keepalive_1_packet1[8] = {0x07, 0x01, 0x08, 0x00, 0x01, 0x00, 0x00, 0x00};
     unsigned char recv_packet1[1024], keepalive_1_packet2[38], recv_packet2[1024];
@@ -427,7 +427,7 @@ int DogCom::keepalive_2(QUdpSocket &udp_sender, int *keepalive_counter, int *fir
     if (*first) {
         // send the file packet
         memset(keepalive_2_packet, 0, 40);
-        keepalive_2_packetbuilder(keepalive_2_packet, *keepalive_counter % 0xFF, *first, 1, 0);
+        keepalive_2_packetbuilder(keepalive_2_packet, *keepalive_counter % 0xFF, *first, 1);
         (*keepalive_counter)++;
 
         udp_sender.writeDatagram((const char*)keepalive_2_packet,40,*server_address,port_dest);
@@ -457,7 +457,7 @@ int DogCom::keepalive_2(QUdpSocket &udp_sender, int *keepalive_counter, int *fir
     // send the first packet
     *first = 0;
     memset(keepalive_2_packet, 0, 40);
-    keepalive_2_packetbuilder(keepalive_2_packet, *keepalive_counter % 0xFF, *first, 1, 0);
+    keepalive_2_packetbuilder(keepalive_2_packet, *keepalive_counter % 0xFF, *first, 1);
     (*keepalive_counter)++;
     udp_sender.writeDatagram((const char*)keepalive_2_packet,40,*server_address,port_dest);
 
@@ -482,7 +482,7 @@ int DogCom::keepalive_2(QUdpSocket &udp_sender, int *keepalive_counter, int *fir
     memcpy(tail, &recv_packet[16], 4);
 
     memset(keepalive_2_packet, 0, 40);
-    keepalive_2_packetbuilder(keepalive_2_packet, *keepalive_counter % 0xFF, *first, 3, 0);
+    keepalive_2_packetbuilder(keepalive_2_packet, *keepalive_counter % 0xFF, *first, 3);
     memcpy(keepalive_2_packet + 16, tail, 4);
     (*keepalive_counter)++;
     udp_sender.writeDatagram((const char*)keepalive_2_packet,40,*server_address,port_dest);
@@ -553,7 +553,7 @@ void DogCom::gen_crc(unsigned char seed[], int encrypt_type, unsigned char crc[]
     }
 }
 
-void DogCom::keepalive_2_packetbuilder(unsigned char keepalive_2_packet[], int keepalive_counter, int filepacket, int type, int encrypt_type)
+void DogCom::keepalive_2_packetbuilder(unsigned char keepalive_2_packet[], int keepalive_counter, int filepacket, int type)
 {
     keepalive_2_packet[0] = 0x07;
     keepalive_2_packet[1] = keepalive_counter;

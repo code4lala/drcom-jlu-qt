@@ -17,7 +17,9 @@ class MainWindow : public QDialog
 
 public:
     explicit MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
+    ~MainWindow() override;
+
+    void closeEvent(QCloseEvent *event) override;
 
 private slots:
     void on_checkBoxAutoLogin_toggled(bool checked);
