@@ -8,7 +8,10 @@ drcom for jlu in qt cross platform
 win和linux测试稳定可用（mac尚未测试
 
 
-# 已实现的功能：  #
+下载链接：[https://github.com/code4lala/drcom-jlu-qt/releases](https://github.com/code4lala/drcom-jlu-qt/releases "https://github.com/code4lala/drcom-jlu-qt/releases")
+
+
+# 已实现的功能：（和Qt自带的特性  #
 
 
 1. 自动识别mac地址 （可手动指定mac地址
@@ -16,7 +19,8 @@ win和linux测试稳定可用（mac尚未测试
 3. 单实例
 4. 记住密码
 5. 自动登录
-6. 
+6. 适配高分屏（Qt自带
+7. 
 
 # 截图： #
 WIN:
