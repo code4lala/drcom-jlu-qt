@@ -39,12 +39,12 @@ UBUNTU:
 2. 喵喵喵？
 
 **注：**
-现在密码是明文保存，具体存在哪跟平台有关。用的QSettings存的，详情请参见官方文档：[https://doc.qt.io/qt-5/qsettings.html](https://doc.qt.io/qt-5/qsettings.html "https://doc.qt.io/qt-5/qsettings.html")
+现在密码是明文保存，具体存在哪跟平台有关。用的QSettings存的，详情请参见官方文档：[https://doc.qt.io/qt-5/qsettings.html#platform-specific-notes](https://doc.qt.io/qt-5/qsettings.html#platform-specific-notes "https://doc.qt.io/qt-5/qsettings.html#platform-specific-notes")
 
 # 感谢： #
 
 
-感谢[https://github.com/lyj3516](https://github.com/lyj3516 "lyj3516")提供的图标
+感谢[https://github.com/lyj3516](https://github.com/lyj3516 "https://github.com/lyj3516")提供的图标
 
 
 **jlu的drcom协议细节**
