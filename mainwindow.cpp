@@ -21,6 +21,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    CURR_STATE=STATE_OFFLINE;
+
     // 记住窗口大小功能
     QSettings settings;
     restoreGeometry(settings.value("mainWindowGeometry").toByteArray());
@@ -28,7 +30,6 @@ MainWindow::MainWindow(QWidget *parent) :
     // 获取mac地址
     foreach(QNetworkInterface i, QNetworkInterface::allInterfaces()){
         if(!i.flags().testFlag(QNetworkInterface::IsLoopBack)){
-//            qDebug()<<i<<endl;
             ui->comboBoxMAC->addItem(i.hardwareAddress()+i.name());
         }
     }
@@ -41,7 +42,7 @@ MainWindow::MainWindow(QWidget *parent) :
     logOutAction=new QAction(tr("&Logout"),this);
     connect(logOutAction,&QAction::triggered,this,&MainWindow::UserLogOut);
     quitAction=new QAction(tr("&Quit"),this);
-    connect(quitAction,&QAction::triggered,qApp,&QCoreApplication::quit);
+    connect(quitAction,&QAction::triggered,qApp,&QApplication::quit);
     // 新建菜单
     trayIconMenu=new QMenu(this);
     trayIconMenu->addAction(restoreAction);
@@ -59,6 +60,14 @@ MainWindow::MainWindow(QWidget *parent) :
     // 显示出来托盘图标
     trayIcon->show();
 
+    // 创建窗口菜单
+    aboutAction=new QAction(tr("&About"),this);
+    connect(aboutAction,&QAction::triggered,this,&MainWindow::AboutDrcom);
+    windowMenu=new QMenu(tr("&Help"),this);
+    windowMenu->addAction(aboutAction);
+    windowMenu->addAction(logOutAction);
+    ui->menuBar->addMenu(windowMenu);
+
     // 读取配置文件
     LoadSettings();
 
@@ -68,6 +77,8 @@ MainWindow::MainWindow(QWidget *parent) :
             this, &MainWindow::HandleOffline);
     connect(dogcomController, &DogcomController::HaveLoggedIn,
             this, &MainWindow::HandleLoggedIn);
+    connect(dogcomController,&DogcomController::HaveObtainedIp,
+            this,&MainWindow::HandleIpAddress);
 
     // 验证手动输入的mac地址
     macValidator=new QRegExpValidator(QRegExp("[0-9a-fA-F]{2}(:[0-9a-fA-F]{2}){5}"));
@@ -78,13 +89,21 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // 自动登录功能
     if(auto_login){
-        ui->pushButtonLogin->click();
+        emit ui->pushButtonLogin->click();
     }
+}
+
+void MainWindow::AboutDrcom(){
+    QDesktopServices::openUrl(QUrl("https://github.com/code4lala/drcom-jlu-qt"));
 }
 
 void MainWindow::closeEvent(QCloseEvent *event){
   QSettings settings;
   settings.setValue("mainWindowGeometry", saveGeometry());
+  // 未登录时直接关闭窗口就退出
+  if(CURR_STATE==STATE_OFFLINE){
+      QApplication::quit();
+  }
 }
 
 void MainWindow::ShowLoginWindow(){
@@ -188,16 +207,17 @@ void MainWindow::on_pushButtonLogin_clicked()
     if(!account.compare("")
      ||!password.compare("")
      ||!mac_addr.compare("")){
-        QMessageBox::warning(this, APP_NAME, "Input can not be empty!");
+        QMessageBox::warning(this, APP_NAME, tr("Input can not be empty!"));
         return;
     }
     if(mac_addr.length()!=17){
-        QMessageBox::warning(this, APP_NAME, "Illegal MAC address!");
+        QMessageBox::warning(this, APP_NAME, tr("Illegal MAC address!"));
         return;
     }
     // 输入无误，执行登录操作
     // 先禁用输入框和按钮
     SetDisableInput(true);
+    CURR_STATE=STATE_LOGGING;
     dogcomController->Login(account,password,mac_addr);
 }
 
@@ -252,10 +272,11 @@ void MainWindow::GetInputs(){
 
 void MainWindow::HandleOffline(int reason)
 {
-    ui->pushButtonLogin->setText("Login");
+    CURR_STATE=STATE_OFFLINE;
+    ui->pushButtonLogin->setText(tr("Login"));
     switch (reason) {
     case OFF_USER_LOGOUT:{
-        QMessageBox::critical(this,tr("Logout succeed"),tr("Logout succeed"));
+        QMessageBox::information(this,tr("Logout succeed"),tr("Logout succeed"));
         break;
     }
     case OFF_BIND_FAILED:{
@@ -314,10 +335,6 @@ void MainWindow::HandleOffline(int reason)
         QMessageBox::critical(this,tr("You have been offline"),tr("Time out, please check your connection"));
         break;
     }
-    case OFF_DHCP_LOGIN_FAILED:{
-        QMessageBox::critical(this,tr("Login failed"),tr("Qt reported that it can not receive packets from the server but I don't think so"));
-        break;
-    }
     case OFF_UNKNOWN:
     default:
         QMessageBox::critical(this, tr("You have been offline"), tr("Unknow reason"));
@@ -340,6 +357,7 @@ void MainWindow::HandleOffline(int reason)
 
 void MainWindow::HandleLoggedIn()
 {
+    CURR_STATE=STATE_ONLINE;
     // 显示欢迎页
     QDesktopServices::openUrl(QUrl("http://login.jlu.edu.cn/notice.php"));
     // 登录成功，保存密码
@@ -357,7 +375,7 @@ void MainWindow::HandleLoggedIn()
 
 void MainWindow::HandleIpAddress(const QString &ip)
 {
-    ui->pushButtonLogin->setText(ip);
+    ui->labelIp->setText(ip);
 }
 
 void MainWindow::UserLogOut()

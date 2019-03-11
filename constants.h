@@ -21,7 +21,6 @@ enum {
 	OFF_NOT_ON_THIS_IP_MAC,
 	OFF_MUST_USE_DHCP,
     OFF_TIMEOUT,
-    OFF_DHCP_LOGIN_FAILED,
 
     // challenge 成功 获取到服务器返回的ip地址
     OBTAIN_IP_ADDRESS,

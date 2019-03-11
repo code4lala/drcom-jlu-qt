@@ -43,8 +43,8 @@ public slots:
 private:
     Ui::MainWindow *ui;
     QString SETTINGS_FILE_NAME="DrCOM_JLU_Qt.ini";
-    const QString CUSTOM_MAC="custom (format: 1A:2B:3C:4D:5E:6F case insensitive)";
-    const QString APP_NAME="DrCOM JLU version";
+    const QString CUSTOM_MAC=tr("custom (format: 1A:2B:3C:4D:5E:6F case insensitive)");
+    const QString APP_NAME=tr("DrCOM JLU Qt version");
     const QString
         idAccount="account",
         idPassword="password",
@@ -56,11 +56,19 @@ private:
     QString account,password,mac_addr;
     bool remember,auto_login;
 
+    // 用于在未登录时关闭窗口就退出
+    int CURR_STATE;
+
     QRegExpValidator *macValidator;
     DogcomController *dogcomController;
 
     // 设置托盘中的注销按钮的可用性
     void DisableLogOutButton(bool yes);
+
+    // 窗口菜单
+    QAction *aboutAction;
+    QMenu *windowMenu;
+    void AboutDrcom();
 
     // 托盘图标
     QAction *restoreAction;

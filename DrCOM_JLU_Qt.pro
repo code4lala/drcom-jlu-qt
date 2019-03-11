@@ -5,6 +5,10 @@
 #-------------------------------------------------
 
 QT       += core gui network widgets
+RC_ICONS = images/icon.ico
+
+# translations
+TRANSLATIONS += ts/DrCOM_zh_CN.ts
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -25,8 +29,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
-        main.cpp \
-        mainwindow.cpp \
+    main.cpp \
+    mainwindow.cpp \
     dogcomcontroller.cpp \
     interruptiblesleeper.cpp \
     dogcom.cpp \
@@ -35,7 +39,7 @@ SOURCES += \
     encrypt/sha1.cpp
 
 HEADERS += \
-        mainwindow.h \
+    mainwindow.h \
     dogcomcontroller.h \
     constants.h \
     interruptiblesleeper.h \
@@ -45,7 +49,7 @@ HEADERS += \
     encrypt/sha1.h
 
 FORMS += \
-        mainwindow.ui
+    mainwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -56,10 +60,5 @@ RESOURCES += \
     DrCOM_JLU_Qt.qrc
 
 # Single Application implementation
-include(.\singleinstance\singleapplication.pri)
+include(singleinstance/singleapplication.pri)
 DEFINES += QAPPLICATION_CLASS=QApplication
-
-# QtKeyChain inplementation
-include(.\qtkeychain\qt5keychain.pri)
-
-DISTFILES +=
