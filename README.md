@@ -25,6 +25,7 @@ WIN:
 
 UBUNTU:
 
+![APCdN8.png](https://s2.ax1x.com/2019/03/11/APCdN8.png)
 
 
 # 待实现的功能： #
@@ -37,6 +38,9 @@ UBUNTU:
 现在密码是明文保存，具体存在哪跟平台有关。用的QSettings存的，详情请参见官方文档：[https://doc.qt.io/qt-5/qsettings.html](https://doc.qt.io/qt-5/qsettings.html "https://doc.qt.io/qt-5/qsettings.html")
 
 # 感谢： #
+
+
+感谢[https://github.com/lyj3516](https://github.com/lyj3516 "lyj3516")提供的图标
 
 
 **jlu的drcom协议细节**
