@@ -62,3 +62,5 @@ RESOURCES += \
 # Single Application implementation
 include(singleinstance/singleapplication.pri)
 DEFINES += QAPPLICATION_CLASS=QApplication
+
+VERSION = 1.0.0.1
