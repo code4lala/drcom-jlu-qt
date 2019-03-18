@@ -5,13 +5,13 @@ drcom for jlu in qt cross platform
 跨平台 **win linux mac**
 
 
-win和linux测试稳定可用（mac尚未测试
+win和linux测试稳定可用（mac尚未测试，没有设备T^T
 
 
 下载链接：[https://github.com/code4lala/drcom-jlu-qt/releases](https://github.com/code4lala/drcom-jlu-qt/releases "https://github.com/code4lala/drcom-jlu-qt/releases")
 
 
-# 已实现的功能：（和Qt自带的特性  #
+# 已实现的功能：#
 
 
 1. 自动识别mac地址 （可手动指定mac地址
@@ -19,18 +19,21 @@ win和linux测试稳定可用（mac尚未测试
 3. 单实例
 4. 记住密码
 5. 自动登录
-6. 适配高分屏（Qt自带
-7. 
+6. 适配高分屏
+7. 快速重启客户端（托盘和菜单，测试网线拔了重插（wifi掉线重连一个道理）的话QUdpSocket不会立即响应，不如直接重启客户端来得方便
+8. 
 
 # 截图： #
 WIN:
 
-![APpDIS.png](https://s2.ax1x.com/2019/03/11/APpDIS.png)
+![AmH6mR.png](https://s2.ax1x.com/2019/03/18/AmH6mR.png)
 
 UBUNTU:
 
-![APCdN8.png](https://s2.ax1x.com/2019/03/11/APCdN8.png)
+![AmHb7t.png](https://s2.ax1x.com/2019/03/18/AmHb7t.png)
 
+注意：Ubuntu 18有个bug，有时候不知道为啥不显示托盘图标，此时按快捷键`Alt`+`F2`然后输入`r`回车等一下就可以刷出来了。
+![AmHzcQ.png](https://s2.ax1x.com/2019/03/18/AmHzcQ.png)
 
 # 待实现的功能： #
 
