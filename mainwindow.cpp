@@ -14,6 +14,7 @@
 #include <QDesktopServices>
 #include <QUrl>
 #include <QCloseEvent>
+#include <QProcess>
 
 MainWindow::MainWindow(QWidget *parent) :
     QDialog(parent),
@@ -35,6 +36,10 @@ MainWindow::MainWindow(QWidget *parent) :
     }
     ui->comboBoxMAC->addItem(CUSTOM_MAC);
 
+    // 重启功能
+    restartAction=new QAction(tr("Re&start"),this);
+    connect(restartAction,&QAction::triggered,this,&MainWindow::RestartDrcom);
+
     // 创建托盘菜单和图标
     // 托盘菜单选项
     restoreAction=new QAction(tr("&Restore"),this);
@@ -49,6 +54,7 @@ MainWindow::MainWindow(QWidget *parent) :
     trayIconMenu->addSeparator();
     trayIconMenu->addAction(logOutAction);
     trayIconMenu->addSeparator();
+    trayIconMenu->addAction(restartAction);
     trayIconMenu->addAction(quitAction);
     // 新建托盘图标
     trayIcon=new QSystemTrayIcon(this);
@@ -67,6 +73,8 @@ MainWindow::MainWindow(QWidget *parent) :
     windowMenu->addAction(aboutAction);
     windowMenu->addAction(logOutAction);
     ui->menuBar->addMenu(windowMenu);
+    // 重启是个专门的菜单按钮
+    ui->menuBar->addAction(restartAction);
 
     // 读取配置文件
     LoadSettings();
@@ -114,6 +122,13 @@ void MainWindow::ShowLoginWindow(){
     // 已显示则将窗口设为焦点
         activateWindow();
     }
+}
+
+void MainWindow::RestartDrcom()
+{
+    qDebug()<<"Restarting Drcom...";
+    qApp->quit();
+    QProcess::startDetached(qApp->arguments()[0],qApp->arguments());
 }
 
 void MainWindow::IconActivated(QSystemTrayIcon::ActivationReason reason)

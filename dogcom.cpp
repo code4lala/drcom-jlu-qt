@@ -96,6 +96,10 @@ void DogCom::run()
                         break;
                     }
                 } else {
+                    // 这个 keepalive_try_counter 在这里貌似没什么用，因为Qt的QUdpSocket有一个state特别敏感
+                    // 明明网线啥的都没问题就说当前是UnconnectedStat状态然后还不给你自动重连
+                    // 所以外层循环先给判断了一下当前状态，如果这玩意报告说掉线了那就直接退出循环发包
+                    // 另： 目前测试还没有遇到过外层state正常然后里边keepalive_try_counter增加计数的情况
                     if (keepalive_try_counter > 3) {
                         // 清理操作
                         emit ReportOffline(OFF_TIMEOUT);

@@ -63,4 +63,11 @@ RESOURCES += \
 include(singleinstance/singleapplication.pri)
 DEFINES += QAPPLICATION_CLASS=QApplication
 
-VERSION = 1.0.0.1
+VERSION = 1.0.0.2
+
+# 更新日志：
+# v 0.0.0.0 实现基本功能
+# v 1.0.0.1 修复适配高DPI时只窗口大小适配但字号不适配的bug
+# v 1.0.0.2 增加重启功能（能解决一些网络的错误
+#           调整字体为微软雅黑10号（就是win下正常的字体
+

@@ -39,6 +39,7 @@ public slots:
     void HandleLoggedIn();
     void HandleIpAddress(const QString &ip);
     void ShowLoginWindow();
+    void RestartDrcom();
 
 private:
     Ui::MainWindow *ui;
@@ -71,6 +72,7 @@ private:
     void AboutDrcom();
 
     // 托盘图标
+    QAction *restartAction;
     QAction *restoreAction;
     QAction *logOutAction;
     QAction *quitAction;

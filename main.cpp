@@ -1,6 +1,7 @@
 ﻿#include "mainwindow.h"
 #include <singleapplication.h>
 #include <QTranslator>
+#include <QDebug>
 
 int main(int argc, char *argv[])
 {
@@ -11,7 +12,8 @@ int main(int argc, char *argv[])
     SingleApplication::setQuitOnLastWindowClosed(false);
 
     QFont font=a.font();
-    font.setPointSize(12);
+    font.setPointSize(10);
+    font.setFamily("Microsoft YaHei");
     a.setFont(font);
 
     QTranslator translator;
@@ -20,6 +22,7 @@ int main(int argc, char *argv[])
 
     MainWindow w;
     QObject::connect(&a,&SingleApplication::instanceStarted,[&w](){
+        qDebug()<<"One instance had started. Its window will be shown by the next line of the source code.";
         w.ShowLoginWindow();
     });
     w.show();
