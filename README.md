@@ -11,7 +11,7 @@ win和linux测试稳定可用（mac尚未测试，没有设备T^T
 下载链接：[https://github.com/code4lala/drcom-jlu-qt/releases](https://github.com/code4lala/drcom-jlu-qt/releases "https://github.com/code4lala/drcom-jlu-qt/releases")
 
 
-# 已实现的功能：#
+# 已实现的功能： #
 
 
 1. 自动识别mac地址 （可手动指定mac地址
