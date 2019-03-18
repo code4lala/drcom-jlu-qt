@@ -39,7 +39,8 @@ UBUNTU:
 
 
 1. 密码加密保存
-2. 喵喵喵？
+2. 掉线后提示用户掉线时直接出现一个`重启客户端`的按钮方便重新登录
+3. 喵喵喵？
 
 **注：**
 现在密码是明文保存，具体存在哪跟平台有关。用的QSettings存的，详情请参见官方文档：[https://doc.qt.io/qt-5/qsettings.html#platform-specific-notes](https://doc.qt.io/qt-5/qsettings.html#platform-specific-notes "https://doc.qt.io/qt-5/qsettings.html#platform-specific-notes")
