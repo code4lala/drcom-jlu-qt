@@ -12,9 +12,6 @@ DogcomController::DogcomController()
 }
 
 void DogcomController::Login(const QString &account,const QString &password,const QString &mac_addr){
-    qDebug()<<"Resetting sleeper...";
-    sleeper->Reset();
-    qDebug()<<"Reset sleeper done.";
     qDebug()<<"Filling config...";
     dogcom->FillConfig(account,password,mac_addr);
     qDebug()<<"Fill config done.";

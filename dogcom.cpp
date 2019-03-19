@@ -39,6 +39,7 @@ void DogCom::print_packet(const char msg[], const unsigned char *packet, int len
 
 void DogCom::run()
 {
+    // 每一个ReportOffline后边都跟着一个return语句，防止程序逻辑混乱
 //    qDebug()<<"account:"<<account;
 //    qDebug()<<"password:"<<password;
 //    qDebug()<<"mac_addr:"<<mac_addr;
@@ -52,9 +53,8 @@ void DogCom::run()
                        PORT_BIND)){
         qDebug()<<"Bind Failed!";
         qDebug()<<udp_sender.error();
-        emit ReportOffline(OFF_BIND_FAILED);
         // 清理操作
-        sleeper->Interrupt();
+        emit ReportOffline(OFF_BIND_FAILED);
         udp_sender.close();
         return;
     }else{
@@ -65,11 +65,11 @@ void DogCom::run()
     unsigned char auth_information[16];
     if(!dhcp_challenge(udp_sender,seed)){
         emit ReportOffline(OFF_CHALLENGE_FAILED);
+        udp_sender.close();
+        return;
     }else{
         //challenge成功 开始登录
         qDebug()<<"trying to login...";
-        // 此时还没有确定在线，用户不能执行注销操作
-        // 因此可以放心地使用Sleep而不必担心被Interrupt
         sleeper->Sleep(200);// 0.2 sec
         qDebug()<<"Wait for 0.2 second done.";
         int offLineReason;
@@ -77,12 +77,12 @@ void DogCom::run()
             // 登录成功
             emit ReportOnline();
             int keepalive_counter = 0;
-            int keepalive_try_counter = 0;
             int first = 1;
             while (true) {
                 if(udp_sender.state()!=QUdpSocket::BoundState){
                     emit ReportOffline(OFF_TIMEOUT);
-                    break;
+                    udp_sender.close();
+                    return;
                 }
                 if (!keepalive_1(udp_sender, auth_information)) {
                     sleeper->Sleep(200); // 0.2 second
@@ -93,32 +93,23 @@ void DogCom::run()
                     if(!sleeper->Sleep(20000)){
                         qDebug()<<"Interruptted by user";
                         emit ReportOffline(OFF_USER_LOGOUT);
-                        break;
-                    }
-                } else {
-                    // 这个 keepalive_try_counter 在这里貌似没什么用，因为Qt的QUdpSocket有一个state特别敏感
-                    // 明明网线啥的都没问题就说当前是UnconnectedStat状态然后还不给你自动重连
-                    // 所以外层循环先给判断了一下当前状态，如果这玩意报告说掉线了那就直接退出循环发包
-                    // 另： 目前测试还没有遇到过外层state正常然后里边keepalive_try_counter增加计数的情况
-                    if (keepalive_try_counter > 3) {
-                        // 清理操作
-                        emit ReportOffline(OFF_TIMEOUT);
-                        sleeper->Interrupt();
                         udp_sender.close();
                         return;
                     }
-                    keepalive_try_counter++;
-                    continue;
+                } else {
+                    // 清理操作
+                    emit ReportOffline(OFF_TIMEOUT);
+                    udp_sender.close();
+                    return;
                 }
             }
         }else{
             // 登录失败，提示用户失败原因
             emit ReportOffline(offLineReason);
+            udp_sender.close();
+            return;
         }
     }
-    // 清理操作
-    sleeper->Interrupt();
-    udp_sender.close();
 }
 
 bool DogCom::dhcp_challenge(QUdpSocket &udp_sender, unsigned char seed[])
@@ -138,7 +129,7 @@ bool DogCom::dhcp_challenge(QUdpSocket &udp_sender, unsigned char seed[])
     print_packet("[Challenge sent]", challenge_packet, 20);
 
     qDebug()<<"reading from dest...";
-    udp_sender.waitForReadyRead(1000);
+    udp_sender.waitForReadyRead(1500);
     if(udp_sender.readDatagram((char*)recv_packet,1024,server_address,&port_dest)<=0){
         qDebug()<<"Failed to recv";
         qDebug()<<udp_sender.error();
@@ -331,7 +322,7 @@ int DogCom::dhcp_login(QUdpSocket &udp_sender, unsigned char seed[], unsigned ch
     udp_sender.writeDatagram((const char*)login_packet,login_packet_size,*server_address,port_dest);
     print_packet("[Login sent]",login_packet,login_packet_size);
 
-    udp_sender.waitForReadyRead(1000);
+    udp_sender.waitForReadyRead(1500); // 注意这个包来得特别慢。。。。。。其他都等100ms就可以了这个500ms都不行。。。。。。
     if(udp_sender.readDatagram((char*)recv_packet,1024,server_address,&port_dest)<=0){
         qDebug()<<udp_sender.error();
         qDebug()<<"Failed to recv data";
@@ -377,7 +368,7 @@ int DogCom::keepalive_1(QUdpSocket &udp_sender, unsigned char auth_information[]
     udp_sender.writeDatagram((const char*)keepalive_1_packet1,8,*server_address,port_dest);
     print_packet("[Keepalive1 sent]",keepalive_1_packet1,42);
     while (1) {
-        udp_sender.waitForReadyRead();
+        udp_sender.waitForReadyRead(1500);
         if(udp_sender.readDatagram((char*)recv_packet1,1024,server_address,&port_dest)<=0){
             qDebug()<<"Failed to recv data";
             qDebug()<<udp_sender.error();
@@ -411,7 +402,7 @@ int DogCom::keepalive_1(QUdpSocket &udp_sender, unsigned char auth_information[]
 
     udp_sender.writeDatagram((const char*)keepalive_1_packet2,42,*server_address,port_dest);
 
-    udp_sender.waitForReadyRead();
+    udp_sender.waitForReadyRead(1500);
     if(udp_sender.readDatagram((char*)recv_packet2,1024,server_address,&port_dest)<=0){
         qDebug()<<"Failed to recv data";
         qDebug()<<udp_sender.error();
@@ -440,7 +431,7 @@ int DogCom::keepalive_2(QUdpSocket &udp_sender, int *keepalive_counter, int *fir
         udp_sender.writeDatagram((const char*)keepalive_2_packet,40,*server_address,port_dest);
 
         print_packet("[Keepalive2_file sent]",keepalive_2_packet,40);
-        udp_sender.waitForReadyRead();
+        udp_sender.waitForReadyRead(1500);
         if(udp_sender.readDatagram((char*)recv_packet,1024,server_address,&port_dest)<=0){
             qDebug()<<udp_sender.error();
             qDebug()<<"Failed to recv data";
@@ -470,7 +461,7 @@ int DogCom::keepalive_2(QUdpSocket &udp_sender, int *keepalive_counter, int *fir
 
     print_packet("[Keepalive2_A sent]",keepalive_2_packet,40);
 
-    udp_sender.waitForReadyRead();
+    udp_sender.waitForReadyRead(1500);
     if(udp_sender.readDatagram((char*)recv_packet,1024,server_address,&port_dest)<=0){
         qDebug()<<udp_sender.error();
         qDebug()<<"Failed to recv data";
@@ -496,7 +487,7 @@ int DogCom::keepalive_2(QUdpSocket &udp_sender, int *keepalive_counter, int *fir
 
     print_packet("[Keepalive2_C sent]",keepalive_2_packet,40);
 
-    udp_sender.waitForReadyRead();
+    udp_sender.waitForReadyRead(1500);
     if(udp_sender.readDatagram((char*)recv_packet,1024,server_address,&port_dest)<=0){
         qDebug()<<udp_sender.error();
         qDebug()<<"Failed to recv data";

@@ -299,7 +299,18 @@ void MainWindow::HandleOffline(int reason)
         break;
     }
     case OFF_CHALLENGE_FAILED:{
-        QMessageBox::critical(this,tr("Login failed"),tr("Challenge failed. Please check your connection:)"));
+        // 弹出一个提示框，带一个直接重启客户端的按钮
+        QMessageBox msgBox;
+        msgBox.setText(tr("Login failed")+" "+tr("Challenge failed. Please check your connection:)")+" "+
+                       tr("Attention that you should connect to wifi or wired firstly and then start the drcom client. If you have connected, you may restart drcom to solve the problem.")
+                       +" "+tr("Restart DrCOM?"));
+        QAbstractButton *pButtonYes=msgBox.addButton(tr("Yes"),QMessageBox::YesRole);
+        msgBox.addButton(tr("Nope"),QMessageBox::NoRole);
+        msgBox.exec();
+        if(msgBox.clickedButton()==pButtonYes){
+            qDebug()<<"Restart DrCOM confirmed";
+            RestartDrcom();
+        }
         break;
     }
     case OFF_CHECK_MAC:{
@@ -347,7 +358,18 @@ void MainWindow::HandleOffline(int reason)
         break;
     }
     case OFF_TIMEOUT:{
-        QMessageBox::critical(this,tr("You have been offline"),tr("Time out, please check your connection"));
+        // 弹出一个提示框，带一个直接重启客户端的按钮
+        QMessageBox msgBox;
+        msgBox.setText(tr("You have been offline")+" "+tr("Time out, please check your connection")
+                       +" "+tr("Due to some reasons, you should connect to wifi or wired firstly and then start the drcom client. So you may not login until you restart DrCOM :D")
+                       +" "+tr("Restart DrCOM?"));
+        QAbstractButton *pButtonYes=msgBox.addButton(tr("Yes"),QMessageBox::YesRole);
+        msgBox.addButton(tr("Nope"),QMessageBox::NoRole);
+        msgBox.exec();
+        if(msgBox.clickedButton()==pButtonYes){
+            qDebug()<<"Restart DrCOM confirmed";
+            RestartDrcom();
+        }
         break;
     }
     case OFF_UNKNOWN:
@@ -368,6 +390,8 @@ void MainWindow::HandleOffline(int reason)
     SetIcon(false);
     // 禁用注销按钮
     DisableLogOutButton(true);
+    // 显示出窗口
+    ShowLoginWindow();
 }
 
 void MainWindow::HandleLoggedIn()

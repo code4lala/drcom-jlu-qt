@@ -6,9 +6,9 @@
 
 /**
  * @brief The InterruptibleSleeper class
- * 使用说明：先Reset，然后Sleep指定时长即可，单位是ms
+ * 使用说明：直接Sleep指定时长即可，单位是ms
  * 中止后台时调用Interrupt，会立即响应
- * Interrupt之后想重新用，再Reset一下，然后Sleep指定时长即可
+ * 通过判断Sleep的返回值确定是否被中断，true即睡眠成功未被中断，false即被中断
  */
 class InterruptibleSleeper : public QObject
 {
@@ -17,7 +17,6 @@ public:
     explicit InterruptibleSleeper(QObject *parent = nullptr);
     // 睡眠成功返回 true 被中断返回 false
     bool Sleep(int timeout);
-    void Reset();
     void Interrupt();
 
 private:
