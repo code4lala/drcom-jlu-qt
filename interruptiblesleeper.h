@@ -12,15 +12,15 @@
  */
 class InterruptibleSleeper : public QObject
 {
-    Q_OBJECT
+	Q_OBJECT
 public:
-    explicit InterruptibleSleeper(QObject *parent = nullptr);
-    // 睡眠成功返回 true 被中断返回 false
-    bool Sleep(int timeout);
-    void Interrupt();
+	explicit InterruptibleSleeper(QObject *parent = nullptr);
+	// 睡眠成功返回 true 被中断返回 false
+	bool Sleep(int timeout);
+	void Interrupt();
 
 private:
-    QMutex m;
+	QMutex m;
 };
 
 #endif // INTERRUPTIBLESLEEPER_H

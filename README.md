@@ -1,20 +1,15 @@
 # drcom-jlu-qt
 drcom for jlu in qt cross platform
 
-
 跨平台 **win linux mac**
 
+win和linux测试稳定可用（mac尚未测试，没有设备T^T
 
-win和linux测试~~稳定~~可用（mac尚未测试，没有设备T^T
-
-（不稳定的bug正在修复中
-
+（不稳定的bug已修复。解决方案：掉线后客户端会尝试自行重启，如果是不稳定的bug导致的掉线的话就直接又重新登录成功了。自动重启登录成功后窗口默认最小化，不会影响您的其他操作，不会弹窗。要是wifi没信号了那就登录失败。注意：自动重启功能依赖于“记住我”选项的勾选）
 
 下载链接：[https://github.com/code4lala/drcom-jlu-qt/releases](https://github.com/code4lala/drcom-jlu-qt/releases "https://github.com/code4lala/drcom-jlu-qt/releases")
 
-
 # 已实现的功能： #
-
 
 1. 自动识别mac地址 （可手动指定mac地址
 2. **最小化到托盘** （linux也可以最小化到托盘啦
@@ -40,7 +35,6 @@ UBUNTU:
 
 # 待实现的功能： #
 
-
 1. 密码加密保存
 2. 喵喵喵？
 3. 
@@ -50,34 +44,25 @@ UBUNTU:
 
 # 感谢： #
 
-
 感谢[https://github.com/lyj3516](https://github.com/lyj3516 "https://github.com/lyj3516")提供的图标
-
 
 **jlu的drcom协议细节**
 
 [https://github.com/drcoms/jlu-drcom-client/blob/master/jlu-drcom-java/jlu-drcom-protocol.md](https://github.com/drcoms/jlu-drcom-client/blob/master/jlu-drcom-java/jlu-drcom-protocol.md "https://github.com/drcoms/jlu-drcom-client/blob/master/jlu-drcom-java/jlu-drcom-protocol.md")
 
-
 **唯一实例**
 
 [https://github.com/itay-grudev/SingleApplication](https://github.com/itay-grudev/SingleApplication "https://github.com/itay-grudev/SingleApplication")
 
-
 # 特别感谢： #
-
 
 [https://github.com/mchome/dogcom](https://github.com/mchome/dogcom "https://github.com/mchome/dogcom")
 
-
 提取出来jlu部分的代码改动到此项目中
-
 
 # 许可证： #
 
-
 GNU Affero General Public License v3.0
-
 
 # 更新日志： #
 
@@ -90,4 +75,6 @@ v 1.0.0.2 增加重启功能，调整字体为微软雅黑10号
 v 1.0.0.3 没有这个版本，上次该发布0.2版本时候压缩包名字打错了。。。应该为1.0.0.2的，所以跳过这个版本号
 
 v 1.0.0.4 优化用户体验，调整掉线时的提示信息，增加掉线时直接重启客户端的提示
+
+v 1.0.0.5 解决不稳定的bug，自动重启客户端重新登录，新增日志功能，方便查错
 

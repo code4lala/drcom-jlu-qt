@@ -63,7 +63,7 @@ RESOURCES += \
 include(singleinstance/singleapplication.pri)
 DEFINES += QAPPLICATION_CLASS=QApplication
 
-VERSION = 1.0.0.4
+VERSION = 1.0.0.5
 
 # 更新日志：
 # v 0.0.0.0 实现基本功能
@@ -72,4 +72,4 @@ VERSION = 1.0.0.4
 #           调整字体为微软雅黑10号（就是win下正常的字体
 # v 1.0.0.3 没有这个版本，上次该发布0.2版本时候压缩包名字打错了。。。应该为1.0.0.2的，所以跳过这个版本号
 # v 1.0.0.4 优化用户体验，调整掉线时的提示信息，增加掉线时直接重启客户端的提示
-
+# v 1.0.0.5 解决不稳定的bug，自动重启客户端重新登录，新增日志功能，方便查错

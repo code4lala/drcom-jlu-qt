@@ -1,18 +1,18 @@
 ﻿#ifndef CONSTANTS_H
 #define CONSTANTS_H
 
-#include <QHostAddress>
+#include <QApplication>
 
 enum {
-    // 离线原因
-    OFF_UNKNOWN,
-    OFF_USER_LOGOUT,
-    OFF_BIND_FAILED,
-    OFF_CHALLENGE_FAILED,
+	// 离线原因
+	OFF_UNKNOWN,
+	OFF_USER_LOGOUT,
+	OFF_BIND_FAILED,
+	OFF_CHALLENGE_FAILED,
 	OFF_CHECK_MAC,
 	OFF_SERVER_BUSY,
-    OFF_WRONG_PASS,
-    OFF_NOT_ENOUGH,
+	OFF_WRONG_PASS,
+	OFF_NOT_ENOUGH,
 	OFF_FREEZE_UP,
 	OFF_NOT_ON_THIS_IP,
 	OFF_NOT_ON_THIS_MAC,
@@ -20,34 +20,43 @@ enum {
 	OFF_UPDATE_CLIENT,
 	OFF_NOT_ON_THIS_IP_MAC,
 	OFF_MUST_USE_DHCP,
-    OFF_TIMEOUT,
+	OFF_TIMEOUT,
 
-    // challenge 成功 获取到服务器返回的ip地址
-    OBTAIN_IP_ADDRESS,
+	// challenge 成功 获取到服务器返回的ip地址
+	OBTAIN_IP_ADDRESS,
 
-    // 当前状态
-    STATE_OFFLINE,
-    STATE_LOGGING,
-    STATE_ONLINE
+	// 当前状态
+	STATE_OFFLINE,
+	STATE_LOGGING,
+	STATE_ONLINE
 
 };
 
 enum {
-    LOGIN_CHECK_MAC          = 0x01,
-    LOGIN_SERVER_BUSY        = 0x02,
-    LOGIN_WRONG_PASS         = 0x03,
-    LOGIN_NOT_ENOUGH         = 0x04,
-    LOGIN_FREEZE_UP          = 0x05,
-    LOGIN_NOT_ON_THIS_IP     = 0x07,
-    LOGIN_NOT_ON_THIS_MAC    = 0x0B,
-    LOGIN_TOO_MUCH_IP        = 0x14,
-    LOGIN_UPDATE_CLIENT      = 0x15,
-    LOGIN_NOT_ON_THIS_IP_MAC = 0x16,
-    LOGIN_MUST_USE_DHCP      = 0x17
+	LOGIN_CHECK_MAC = 0x01,
+	LOGIN_SERVER_BUSY = 0x02,
+	LOGIN_WRONG_PASS = 0x03,
+	LOGIN_NOT_ENOUGH = 0x04,
+	LOGIN_FREEZE_UP = 0x05,
+	LOGIN_NOT_ON_THIS_IP = 0x07,
+	LOGIN_NOT_ON_THIS_MAC = 0x0B,
+	LOGIN_TOO_MUCH_IP = 0x14,
+	LOGIN_UPDATE_CLIENT = 0x15,
+	LOGIN_NOT_ON_THIS_IP_MAC = 0x16,
+	LOGIN_MUST_USE_DHCP = 0x17
 };
 
-const int PORT_BIND=61440;
-const int PORT_DEST=61440;
-const QString SERVER_IP="10.100.61.3";
+const int PORT_BIND = 61440;
+const int PORT_DEST = 61440;
+const QString SERVER_IP = "10.100.61.3";
+const QString SETTINGS_FILE_NAME = "DrCOM_JLU_Qt.ini";
+const QString
+ID_ACCOUNT = "account",
+ID_PASSWORD = "password",
+ID_MAC = "mac",
+ID_REMEMBER = "remember",
+ID_AUTO_LOGIN = "autoLogin";
+const QString ID_RESTART_TIMES = "restartTimes";
+const int RETRY_TIMES = 3;
 
 #endif // CONSTANTS_H
