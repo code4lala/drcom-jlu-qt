@@ -5,6 +5,10 @@ drcom for jlu in qt cross platform
 
 win和linux测试稳定可用（mac尚未测试，没有设备T^T
 
+win兼容性从xp到win10均可用
+
+linux release包敬请期待（Ubuntu18不能deploy，得先装个老版本Ubuntu然后再装老版本的qt的然后再部署
+
 （不稳定的bug已修复。解决方案：掉线后客户端会尝试自行重启，如果是不稳定的bug导致的掉线的话就直接又重新登录成功了。自动重启登录成功后窗口默认最小化，不会影响您的其他操作，不会弹窗。要是wifi没信号了那就登录失败。注意：自动重启功能依赖于“记住我”选项的勾选）
 
 下载链接：[https://github.com/code4lala/drcom-jlu-qt/releases](https://github.com/code4lala/drcom-jlu-qt/releases "https://github.com/code4lala/drcom-jlu-qt/releases")
