@@ -32,14 +32,15 @@ UBUNTU:
 
 ![AmHb7t.png](https://s2.ax1x.com/2019/03/18/AmHb7t.png)
 
-注意：Ubuntu 18有个bug，有时候不知道为啥不显示托盘图标，此时按快捷键`Alt`+`F2`然后输入`r`回车等一下就可以刷出来了。
-![AmHzcQ.png](https://s2.ax1x.com/2019/03/18/AmHzcQ.png)
+注意：Ubuntu 18不显示托盘图标的bug的解决方案：
+[https://askubuntu.com/questions/1056226/ubuntu-budgie-18-04-lts-system-tray-icons-not-all-showing](https://askubuntu.com/questions/1056226/ubuntu-budgie-18-04-lts-system-tray-icons-not-all-showing)
 
 # 待实现的功能： #
 
 1. 密码加密保存
-2. 喵喵喵？
-3. 
+2. 被顶掉（现在的实现没有考虑被顶掉，两台设备同时登录的话会无限互相顶
+3. 喵喵喵？
+4. 
 
 **注：**
 现在密码是明文保存，具体存在哪跟平台有关。用的QSettings存的，详情请参见官方文档：[https://doc.qt.io/qt-5/qsettings.html#platform-specific-notes](https://doc.qt.io/qt-5/qsettings.html#platform-specific-notes "https://doc.qt.io/qt-5/qsettings.html#platform-specific-notes")
