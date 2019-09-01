@@ -108,6 +108,20 @@
             </property>
            </widget>
           </item>
+          <item row="1" column="0">
+           <widget class="QCheckBox" name="checkBoxNotShowWelcome">
+            <property name="text">
+             <string>NotShowWelcomePage</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QCheckBox" name="checkBoxHideLoginWindow">
+            <property name="text">
+             <string>HideLoginWindow</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </item>
         <item>

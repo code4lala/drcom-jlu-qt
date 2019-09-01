@@ -100,7 +100,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	int restartTimes = s.value(ID_RESTART_TIMES, 0).toInt();
 	qDebug() << "MainWindow constructor: restartTimes=" << restartTimes;
 	if (restartTimes == 0) {
-		if (auto_login) {
+        if (bAutoLogin) {
 			emit ui->pushButtonLogin->click();
 		}
 	}
@@ -196,19 +196,29 @@ void MainWindow::LoadSettings() {
 	account = s.value(ID_ACCOUNT, "").toString();
 	password = s.value(ID_PASSWORD, "").toString();
 	mac_addr = s.value(ID_MAC, "").toString();
-	remember = s.value(ID_REMEMBER, false).toBool();
-	auto_login = s.value(ID_AUTO_LOGIN, false).toBool();
+    bRemember = s.value(ID_REMEMBER, false).toBool();
+    bAutoLogin = s.value(ID_AUTO_LOGIN, false).toBool();
+    bHideWindow = s.value(ID_HIDE_WINDOW, false).toBool();
+    bNotShowWelcome = s.value(ID_NOT_SHOW_WELCOME, false).toBool();
 	ui->lineEditAccount->setText(account);
 	ui->lineEditPass->setText(password);
 	SetMAC(mac_addr);
-	if (remember)
+    if (bRemember)
 		ui->checkBoxRemember->setCheckState(Qt::CheckState::Checked);
 	else
 		ui->checkBoxRemember->setCheckState(Qt::CheckState::Unchecked);
-	if (auto_login)
+    if (bAutoLogin)
 		ui->checkBoxAutoLogin->setCheckState(Qt::CheckState::Checked);
 	else
 		ui->checkBoxAutoLogin->setCheckState(Qt::CheckState::Unchecked);
+    if(bHideWindow)
+        ui->checkBoxHideLoginWindow->setCheckState(Qt::CheckState::Checked);
+    else
+        ui->checkBoxHideLoginWindow->setCheckState(Qt::CheckState::Unchecked);
+    if(bNotShowWelcome)
+        ui->checkBoxNotShowWelcome->setCheckState(Qt::CheckState::Checked);
+    else
+        ui->checkBoxNotShowWelcome->setCheckState(Qt::CheckState::Unchecked);
 }
 
 void MainWindow::SaveSettings() {
@@ -216,8 +226,8 @@ void MainWindow::SaveSettings() {
 	s.setValue(ID_ACCOUNT, account);
 	s.setValue(ID_PASSWORD, password);
 	s.setValue(ID_MAC, mac_addr);
-	s.setValue(ID_REMEMBER, remember);
-	s.setValue(ID_AUTO_LOGIN, auto_login);
+    s.setValue(ID_REMEMBER, bRemember);
+    s.setValue(ID_AUTO_LOGIN, bAutoLogin);
 }
 
 void MainWindow::SetMAC(const QString &m)
@@ -342,8 +352,8 @@ void MainWindow::GetInputs() {
 		mac_addr = ui->comboBoxMAC->currentText();
 	}
 	mac_addr = mac_addr.remove(17, mac_addr.length()).toUpper();
-	remember = ui->checkBoxRemember->checkState();
-	auto_login = ui->checkBoxAutoLogin->checkState();
+    bRemember = ui->checkBoxRemember->checkState();
+    bAutoLogin = ui->checkBoxAutoLogin->checkState();
 }
 
 void MainWindow::HandleOffline(int reason)
@@ -432,7 +442,7 @@ void MainWindow::HandleOffline(int reason)
 	case OFF_TIMEOUT: {
 		// 先尝试自己重启若干次，自个重启还不行的话再提示用户
 		// 自己重启的话需要用户提前勾选记住密码
-		if (remember) {
+        if (bRemember) {
 			QSettings s(SETTINGS_FILE_NAME);
 			int restartTimes = s.value(ID_RESTART_TIMES, 0).toInt();
 			qDebug() << "case OFF_TIMEOUT: restartTimes=" << restartTimes;
@@ -471,8 +481,8 @@ void MainWindow::HandleOffline(int reason)
 		// 清除已保存的密码
 		account = "";
 		password = "";
-		remember = false;
-		auto_login = false;
+        bRemember = false;
+        bAutoLogin = false;
 		SaveSettings();
 	}
 	// 重新启用输入
@@ -492,14 +502,16 @@ void MainWindow::HandleLoggedIn()
 
 	CURR_STATE = STATE_ONLINE;
 	// 显示欢迎页
-	if (restartTimes == 0) {
+    bool bNotShowWelcome = s.value(ID_NOT_SHOW_WELCOME, false).toBool();
+    if (restartTimes == 0 && !bNotShowWelcome) {
+        qDebug()<<"open welcome page";
 		QDesktopServices::openUrl(QUrl("http://login.jlu.edu.cn/notice.php"));
 	}
 	else {
 		// 自行尝试重启的，不显示欢迎页
 	}
 	// 登录成功，保存密码
-	if (remember) {
+    if (bRemember) {
 		SaveSettings();
 	}
 	else {
@@ -537,4 +549,16 @@ void MainWindow::DisableLogOutButton(bool yes) {
 	else {
 		logOutAction->setEnabled(true);
 	}
+}
+
+void MainWindow::on_checkBoxNotShowWelcome_toggled(bool checked)
+{
+    QSettings s(SETTINGS_FILE_NAME);
+    s.setValue(ID_NOT_SHOW_WELCOME, checked);
+}
+
+void MainWindow::on_checkBoxHideLoginWindow_toggled(bool checked)
+{
+    QSettings s(SETTINGS_FILE_NAME);
+    s.setValue(ID_HIDE_WINDOW, checked);
 }

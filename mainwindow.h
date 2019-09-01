@@ -29,6 +29,10 @@ private slots:
 	void IconActivated(QSystemTrayIcon::ActivationReason reason);
 	void UserLogOut();
 
+    void on_checkBoxNotShowWelcome_toggled(bool checked);
+
+    void on_checkBoxHideLoginWindow_toggled(bool checked);
+
 public slots:
 	void HandleOffline(int reason);
 	void HandleLoggedIn();
@@ -49,7 +53,8 @@ private:
 
 	// 记录用户保存的信息
 	QString account, password, mac_addr;
-	bool remember, auto_login;
+    bool bRemember, bAutoLogin;
+    bool bHideWindow, bNotShowWelcome;
 
 	// 用于在未登录时关闭窗口就退出
 	int CURR_STATE;

@@ -62,7 +62,9 @@ ID_ACCOUNT = "account",
 ID_PASSWORD = "password",
 ID_MAC = "mac",
 ID_REMEMBER = "remember",
-ID_AUTO_LOGIN = "autoLogin";
+ID_AUTO_LOGIN = "autoLogin",
+ID_HIDE_WINDOW = "showWindow",
+ID_NOT_SHOW_WELCOME = "showWelcome";
 const QString ID_RESTART_TIMES = "restartTimes";
 const int RETRY_TIMES = 3;
 
