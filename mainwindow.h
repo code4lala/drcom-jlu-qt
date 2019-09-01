@@ -23,15 +23,10 @@ public:
 
 private slots:
 	void on_checkBoxAutoLogin_toggled(bool checked);
-
 	void on_checkBoxRemember_toggled(bool checked);
-
 	void on_comboBoxMAC_currentTextChanged(const QString &arg1);
-
 	void on_pushButtonLogin_clicked();
-
 	void IconActivated(QSystemTrayIcon::ActivationReason reason);
-
 	void UserLogOut();
 
 public slots:
@@ -47,6 +42,10 @@ private:
 	Ui::MainWindow *ui;
 	const QString CUSTOM_MAC = tr("custom (format: 1A:2B:3C:4D:5E:6F case insensitive)");
 	const QString APP_NAME = tr("DrCOM JLU Qt version");
+
+    // 用于确保调用socket的析构函数，释放资源
+    bool bQuit=false;
+    bool bRestart=false;
 
 	// 记录用户保存的信息
 	QString account, password, mac_addr;

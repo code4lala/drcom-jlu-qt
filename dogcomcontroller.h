@@ -12,6 +12,7 @@ class DogcomController : public QObject
 	Q_OBJECT
 public:
 	DogcomController();
+	virtual ~DogcomController();
 	void Login(const QString &account, const QString &password, const QString &mac);
 	void LogOut();
 public slots:
@@ -23,8 +24,8 @@ signals:
 	void HaveLoggedIn();
 	void HaveObtainedIp(const QString &ip);
 private:
-	InterruptibleSleeper *sleeper;
-	DogCom *dogcom;
+	InterruptibleSleeper *sleeper=nullptr;
+	DogCom *dogcom=nullptr;
 };
 
 #endif // DOGCOMCONTROLLER_H

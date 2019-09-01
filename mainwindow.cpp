@@ -136,11 +136,18 @@ void MainWindow::ShowLoginWindow() {
 
 void MainWindow::RestartDrcom()
 {
-	qDebug() << "quiting current instance...";
-	qApp->quit();
-	qDebug() << "Restarting Drcom...";
-	QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
-	qDebug() << "Restart done.";
+    bRestart=true;
+    if(CURR_STATE==STATE_ONLINE)
+        dogcomController->LogOut();
+    else if(CURR_STATE==STATE_OFFLINE){
+        qDebug() << "quiting current instance...";
+        qApp->quit();
+        qDebug() << "Restarting Drcom...";
+        QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
+        qDebug() << "Restart done.";
+    }
+    else if(CURR_STATE==STATE_LOGGING)
+        ;// 正在登录时候退出，假装没看到，不理
 }
 
 void MainWindow::QuitDrcom()
@@ -150,7 +157,17 @@ void MainWindow::QuitDrcom()
 	s.setValue(ID_RESTART_TIMES, 0);
 	qDebug() << "reset restartTimes";
 	qDebug() << "QuitDrcom";
-	qApp->quit();
+
+    // TODO : release socket
+    bQuit=true;
+    if(CURR_STATE==STATE_ONLINE)
+        dogcomController->LogOut();
+    else if(CURR_STATE==STATE_OFFLINE)
+        qApp->quit();
+    else if(CURR_STATE==STATE_LOGGING)
+        ;// 正在登录时候退出，假装没看到，不理
+
+    // qApp->quit()调用放到了注销响应那块
 }
 
 void MainWindow::RestartDrcomByUser()
@@ -222,6 +239,16 @@ void MainWindow::SetMAC(const QString &m)
 MainWindow::~MainWindow()
 {
 	delete ui;
+    delete restartAction;
+    delete restoreAction;
+    delete logOutAction;
+    delete quitAction;
+    delete trayIconMenu;
+    delete trayIcon;
+    delete aboutAction;
+    delete windowMenu;
+    delete dogcomController;
+    delete macValidator;
 }
 
 void MainWindow::on_checkBoxAutoLogin_toggled(bool checked)
@@ -253,7 +280,7 @@ void MainWindow::on_pushButtonLogin_clicked()
 	GetInputs();
 	if (!account.compare("")
 		|| !password.compare("")
-		|| !mac_addr.compare("")) {
+        || !mac_addr.compare("")) {
 		QMessageBox::warning(this, APP_NAME, tr("Input can not be empty!"));
 		return;
 	}
@@ -325,7 +352,18 @@ void MainWindow::HandleOffline(int reason)
 	ui->pushButtonLogin->setText(tr("Login"));
 	switch (reason) {
 	case OFF_USER_LOGOUT: {
-		QMessageBox::information(this, tr("Logout succeed"), tr("Logout succeed"));
+        if(bQuit){
+            qApp->quit();
+            return;
+        }
+        if(bRestart){
+            qApp->quit();
+            qDebug() << "Restarting Drcom...";
+            QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
+            qDebug() << "Restart done.";
+            return;
+        }
+        QMessageBox::information(this, tr("Logout succeed"), tr("Logout succeed"));
 		break;
 	}
 	case OFF_BIND_FAILED: {

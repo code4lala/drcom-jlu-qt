@@ -11,6 +11,11 @@ DogcomController::DogcomController()
 	connect(dogcom, &DogCom::ReportIpAddress, this, &DogcomController::HandleIpAddress);
 }
 
+DogcomController::~DogcomController(){
+	if(sleeper!=nullptr) delete sleeper;
+	if(dogcom!=nullptr) delete dogcom;
+}
+
 void DogcomController::Login(const QString &account, const QString &password, const QString &mac_addr) {
 	qDebug() << "Filling config...";
 	dogcom->FillConfig(account, password, mac_addr);

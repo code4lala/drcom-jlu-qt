@@ -36,7 +36,8 @@ SOURCES += \
     dogcom.cpp \
     encrypt/md4.cpp \
     encrypt/md5.cpp \
-    encrypt/sha1.cpp
+    encrypt/sha1.cpp \
+    DogcomSocket.cpp
 
 HEADERS += \
     mainwindow.h \
@@ -46,7 +47,8 @@ HEADERS += \
     dogcom.h \
     encrypt/md4.h \
     encrypt/md5.h \
-    encrypt/sha1.h
+    encrypt/sha1.h \
+    DogcomSocket.h
 
 FORMS += \
     mainwindow.ui
@@ -65,6 +67,7 @@ DEFINES += QAPPLICATION_CLASS=QApplication
 
 VERSION = 1.0.0.5
 
+win32:LIBS += -lwsock32
 # 更新日志：
 # v 0.0.0.0 实现基本功能
 # v 1.0.0.1 修复适配高DPI时只窗口大小适配但字号不适配的bug
