@@ -65,7 +65,7 @@ RESOURCES += \
 include(singleinstance/singleapplication.pri)
 DEFINES += QAPPLICATION_CLASS=QApplication
 
-VERSION = 1.0.0.5
+VERSION = 1.0.0.6
 
 win32:LIBS += -lwsock32
 # 更新日志：
@@ -76,3 +76,5 @@ win32:LIBS += -lwsock32
 # v 1.0.0.3 没有这个版本，上次该发布0.2版本时候压缩包名字打错了。。。应该为1.0.0.2的，所以跳过这个版本号
 # v 1.0.0.4 优化用户体验，调整掉线时的提示信息，增加掉线时直接重启客户端的提示
 # v 1.0.0.5 解决不稳定的bug，自动重启客户端重新登录，新增日志功能，方便查错
+# v 1.0.0.6 更换QUdpSocket为win和linux原生接口，增强稳定性（并不知道为什么QUdpSocket要设置一个状态
+#           增加了两个checkbox可选关闭校园网之窗和隐藏登录窗口

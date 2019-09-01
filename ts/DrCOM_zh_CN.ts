@@ -36,7 +36,7 @@
     <message>
         <location filename="../mainwindow.ui" line="114"/>
         <source>NotShowWelcomePage</source>
-        <translation>不弹出登录网页</translation>
+        <translation>不弹出校园网之窗</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="121"/>
