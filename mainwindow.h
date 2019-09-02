@@ -6,6 +6,7 @@
 #include <QRegExpValidator>
 #include <dogcomcontroller.h>
 #include <QSystemTrayIcon>
+#include "singleapplication.h"
 
 namespace Ui {
 	class MainWindow;
@@ -16,7 +17,7 @@ class MainWindow : public QDialog
 	Q_OBJECT
 
 public:
-	explicit MainWindow(QWidget *parent = nullptr);
+    explicit MainWindow(SingleApplication *parentApp=nullptr, QWidget *parent = nullptr);
 	~MainWindow() override;
 
 	void closeEvent(QCloseEvent *) override;
@@ -44,6 +45,7 @@ public slots:
 
 private:
 	Ui::MainWindow *ui;
+    SingleApplication *app=nullptr;
 	const QString CUSTOM_MAC = tr("custom (format: 1A:2B:3C:4D:5E:6F case insensitive)");
 	const QString APP_NAME = tr("DrCOM JLU Qt version");
 

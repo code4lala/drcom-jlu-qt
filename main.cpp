@@ -85,14 +85,11 @@ int main(int argc, char *argv[])
 	translator.load(":/ts/DrCOM_zh_CN.qm");
 	a.installTranslator(&translator);
 
-	MainWindow w;
+    MainWindow w(&a);
 	QObject::connect(&a, &SingleApplication::instanceStarted, [&w]() {
 		qDebug() << "One instance had started. Its window will be shown by the next line of the source code.";
 		w.ShowLoginWindow();
 	});
-
-    // 关机时接收退出信号，释放socket
-    QObject::connect(&a, &SingleApplication::aboutToQuit, &w, &MainWindow::QuitDrcom);
 
     QSettings s(SETTINGS_FILE_NAME);
     bool bHideWindow=s.value(ID_HIDE_WINDOW, false).toBool();

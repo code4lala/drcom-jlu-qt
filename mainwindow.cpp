@@ -16,10 +16,14 @@
 #include <QCloseEvent>
 #include <QProcess>
 
-MainWindow::MainWindow(QWidget *parent) :
-	QDialog(parent),
-	ui(new Ui::MainWindow)
+MainWindow::MainWindow(SingleApplication *parentApp, QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::MainWindow),
+    app(parentApp)
 {
+    // 关机时接收退出信号，释放socket
+    QObject::connect(app, &SingleApplication::aboutToQuit, this, &MainWindow::QuitDrcom);
+
     qDebug()<<"MainWindow constructor";
 	ui->setupUi(this);
 

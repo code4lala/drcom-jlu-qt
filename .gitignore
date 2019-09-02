@@ -47,3 +47,4 @@ CMakeLists.txt.user*
 .vs
 .vscode
 *.code-workspace
+*.zip
