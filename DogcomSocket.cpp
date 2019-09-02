@@ -98,9 +98,11 @@ void DogcomSocket::init(){
         throw DogcomSocketException(DogcomError::SET_SOCK_OPT_REUSE,r);
     }
 
+#ifdef SO_REUSEPORT
     if ((r = setsockopt(sockfd, SOL_SOCKET, SO_REUSEPORT, (char *) &optval, sizeof(optval))) < 0) {
         throw DogcomSocketException(DogcomError::SET_SOCK_OPT_REUSE,r);
     }
+#endif
 #endif
 }
 
