@@ -20,6 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	QDialog(parent),
 	ui(new Ui::MainWindow)
 {
+    qDebug()<<"MainWindow constructor";
 	ui->setupUi(this);
 
 	CURR_STATE = STATE_OFFLINE;
@@ -248,6 +249,7 @@ void MainWindow::SetMAC(const QString &m)
 
 MainWindow::~MainWindow()
 {
+    qDebug()<<"MainWindow destructor";
 	delete ui;
     delete restartAction;
     delete restoreAction;

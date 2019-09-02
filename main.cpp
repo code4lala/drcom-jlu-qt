@@ -91,13 +91,16 @@ int main(int argc, char *argv[])
 		w.ShowLoginWindow();
 	});
 
+    // 关机时接收退出信号，释放socket
+    QObject::connect(&a, &SingleApplication::aboutToQuit, &w, &MainWindow::QuitDrcom);
+
     QSettings s(SETTINGS_FILE_NAME);
     bool bHideWindow=s.value(ID_HIDE_WINDOW, false).toBool();
 	// 如果是软件自行重启的就不显示窗口
 	int restartTimes = s.value(ID_RESTART_TIMES, 0).toInt();
 	qDebug() << "main: restartTimes=" << restartTimes;
     if(bHideWindow){
-        qDebug()<<"not show window caused user settings";
+        qDebug()<<"not show window caused by user settings";
     } else if (restartTimes > 0) {
         // 是自行重启不显示窗口
         qDebug()<<"not show window caused by self restart";
