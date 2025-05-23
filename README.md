@@ -1,7 +1,7 @@
 # drcom-jlu-qt
 drcom for jlu in qt cross platform
 
-跨平台 **win linux** [下载链接](https://github.com/code4lala/drcom-jlu-qt/releases)
+跨平台 **win linux** [下载链接](https://github.com/KnCRJVirX/drcom-jlu-qt/releases)
 
 # 警告
 现在密码是明文保存，具体存在哪跟平台有关。用的QSettings存的，详情请参见官方文档：[https://doc.qt.io/qt-5/qsettings.html#platform-specific-notes](https://doc.qt.io/qt-5/qsettings.html#platform-specific-notes)
