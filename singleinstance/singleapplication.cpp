@@ -26,6 +26,8 @@
 #include <QtCore/QByteArray>
 #include <QtCore/QSharedMemory>
 
+#include <cstdlib>
+
 #include "singleapplication.h"
 #include "singleapplication_p.h"
 
@@ -75,7 +77,7 @@ SingleApplication::SingleApplication( int &argc, char *argv[], bool allowSeconda
     }
 
     InstancesInfo* inst = static_cast<InstancesInfo*>( d->memory->data() );
-    QTime time;
+    QElapsedTimer time;
     time.start();
 
     // Make sure the shared memory block is initialised and in consistent state
@@ -92,8 +94,8 @@ SingleApplication::SingleApplication( int &argc, char *argv[], bool allowSeconda
         d->memory->unlock();
 
         // Random sleep here limits the probability of a collision between two racing apps
-        qsrand( QDateTime::currentMSecsSinceEpoch() % std::numeric_limits<uint>::max() );
-        QThread::sleep( 8 + static_cast <unsigned long>( static_cast <float>( qrand() ) / RAND_MAX * 10 ) );
+        srand( QDateTime::currentMSecsSinceEpoch() % std::numeric_limits<uint>::max() );
+        QThread::sleep( 8 + static_cast <unsigned long>( static_cast <float>( rand() ) / RAND_MAX * 10 ) );
     }
 
     if( inst->primary == false) {

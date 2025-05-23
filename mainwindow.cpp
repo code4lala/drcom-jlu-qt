@@ -6,7 +6,7 @@
 #include <QDebug>
 #include <QMessageBox>
 #include <QValidator>
-#include <QRegExp>
+#include <QRegularExpression>
 #include <QSettings>
 #include <QWindow>
 #include "constants.h"
@@ -15,6 +15,7 @@
 #include <QUrl>
 #include <QCloseEvent>
 #include <QProcess>
+#include <QTimer>
 
 MainWindow::MainWindow(SingleApplication *parentApp, QWidget *parent) :
     QDialog(parent),
@@ -94,7 +95,7 @@ MainWindow::MainWindow(SingleApplication *parentApp, QWidget *parent) :
 		this, &MainWindow::HandleIpAddress);
 
 	// 验证手动输入的mac地址
-	macValidator = new QRegExpValidator(QRegExp("[0-9a-fA-F]{2}(:[0-9a-fA-F]{2}){5}"));
+    macValidator = new QRegularExpressionValidator(QRegularExpression("[0-9a-fA-F]{2}(:[0-9a-fA-F]{2}){5}"), this);
 	ui->lineEditMAC->setValidator(macValidator);
 
 	// 尚未登录 不可注销
@@ -158,8 +159,8 @@ void MainWindow::RestartDrcom()
 void MainWindow::QuitDrcom()
 {
 	// 退出之前恢复重试计数
-	QSettings s(SETTINGS_FILE_NAME);
-	s.setValue(ID_RESTART_TIMES, 0);
+    QSettings s(SETTINGS_FILE_NAME, QSettings::IniFormat);
+    s.setValue(ID_RESTART_TIMES, 0);
 	qDebug() << "reset restartTimes";
 	qDebug() << "QuitDrcom";
 
@@ -168,7 +169,8 @@ void MainWindow::QuitDrcom()
     if(CURR_STATE==STATE_ONLINE)
         dogcomController->LogOut();
     else if(CURR_STATE==STATE_OFFLINE)
-        qApp->quit();
+        // qApp->quit();
+        QTimer::singleShot(0, qApp, SLOT(quit()));
     else if(CURR_STATE==STATE_LOGGING)
         ;// 正在登录时候退出，假装没看到，不理
 

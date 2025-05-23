@@ -48,3 +48,6 @@ CMakeLists.txt.user*
 .vscode
 *.code-workspace
 *.zip
+
+# Build
+build/

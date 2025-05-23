@@ -50,7 +50,7 @@ void LogMsgOutput(QtMsgType type,
 	QFile file(dir.path() + QString("/logs/log%1.lgt").arg(timePoint));
 	file.open(QIODevice::WriteOnly | QIODevice::Append);
 	QTextStream out(&file);
-	out << log << endl;
+    out << log << Qt::endl;
 	file.close();
 
 	// 释放锁
