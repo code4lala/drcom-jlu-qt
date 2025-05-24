@@ -152,8 +152,8 @@ void MainWindow::RestartDrcom()
         QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
         qDebug() << "Restart done.";
     }
-    else if(CURR_STATE==STATE_LOGGING)
-        ;// 正在登录时候退出，假装没看到，不理
+    // else if(CURR_STATE==STATE_LOGGING)
+    // 正在登录时候退出，假装没看到，不理
 }
 
 void MainWindow::QuitDrcom()
@@ -171,8 +171,8 @@ void MainWindow::QuitDrcom()
     else if(CURR_STATE==STATE_OFFLINE)
         // qApp->quit();
         QTimer::singleShot(0, qApp, SLOT(quit()));
-    else if(CURR_STATE==STATE_LOGGING)
-        ;// 正在登录时候退出，假装没看到，不理
+    // else if(CURR_STATE==STATE_LOGGING)
+    // 正在登录时候退出，假装没看到，不理
 
     // qApp->quit()调用放到了注销响应那块
 }

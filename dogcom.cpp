@@ -27,7 +27,7 @@ void DogCom::FillConfig(QString a, QString p, QString m)
 	mac_addr = m;
 }
 
-void DogCom::print_packet(const char msg[], const unsigned char *packet, int length)
+void DogCom::print_packet(const char* msg, const unsigned char *packet, int length)
 {
 	if (!log)
 		return;

@@ -72,7 +72,7 @@ int main(int argc, char *argv[])
 #endif
 
 	SingleApplication::setQuitOnLastWindowClosed(false);
-	SingleApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    // SingleApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
 	qDebug() << "...main...";
 
@@ -82,7 +82,9 @@ int main(int argc, char *argv[])
 	a.setFont(font);
 
 	QTranslator translator;
-	translator.load(":/ts/DrCOM_zh_CN.qm");
+    if (!translator.load(":/ts/DrCOM_zh_CN.qm")) {
+        qWarning() << "Failed to load translation file!";
+    }
 	a.installTranslator(&translator);
 
     MainWindow w(&a);
