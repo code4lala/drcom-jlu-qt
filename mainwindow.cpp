@@ -161,7 +161,7 @@ void MainWindow::RestartDrcom()
 void MainWindow::QuitDrcom()
 {
 	// 退出之前恢复重试计数
-    QSettings s(SETTINGS_FILE_NAME, QSettings::IniFormat);
+    QSettings s(SETTINGS_FILE_NAME);
     s.setValue(ID_RESTART_TIMES, 0);
 	qDebug() << "reset restartTimes";
 	qDebug() << "QuitDrcom";
