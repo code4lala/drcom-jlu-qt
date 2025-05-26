@@ -73,7 +73,7 @@ QString DecryptString(const QString& base64EncodedPassword)
     #ifdef _WIN32
     QByteArray decrypted = DecryptWithWindowsDPAPI(decoded);
     #else
-    QByteArray decrypted = SimpleDecrypt(password.toUtf8());
+    QByteArray decrypted = SimpleDecrypt(decoded);
     #endif
     return QString::fromUtf8(decrypted);
 }
