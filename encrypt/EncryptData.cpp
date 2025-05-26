@@ -37,7 +37,7 @@ QByteArray DecryptWithWindowsDPAPI(const QByteArray& encryptedData)
 }
 
 #else
-QByteArray SimpleEncrypt(const QByteArray& data, const QByteArray& key = "SimpleKey")
+QByteArray SimpleEncrypt(const QByteArray& data, const QByteArray& key)
 {
     QByteArray ba = data;
     for (int i = 0; i < ba.size(); ++i){
@@ -46,7 +46,7 @@ QByteArray SimpleEncrypt(const QByteArray& data, const QByteArray& key = "Simple
     return ba;
 }
 
-QByteArray SimpleDecrypt(const QByteArray& data, const QByteArray& key = "SimpleKey")
+QByteArray SimpleDecrypt(const QByteArray& data, const QByteArray& key)
 {
     QByteArray ba = data;
     for (int i = 0; i < ba.size(); ++i){
