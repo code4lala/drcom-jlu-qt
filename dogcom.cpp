@@ -27,7 +27,7 @@ void DogCom::FillConfig(QString a, QString p, QString m)
 	mac_addr = m;
 }
 
-void DogCom::print_packet(const char msg[], const unsigned char *packet, int length)
+void DogCom::print_packet(const char* msg, const unsigned char *packet, int length)
 {
 	if (!log)
 		return;
@@ -45,7 +45,7 @@ void DogCom::run()
 	//    qDebug()<<"account:"<<account;
 	//    qDebug()<<"password:"<<password;
 	//    qDebug()<<"mac_addr:"<<mac_addr;
-	qDebug() << endl;
+    qDebug() << Qt::endl;
 	qDebug() << "Start dogcoming...";
 	// 后台登录维持连接的线程
 	srand((unsigned int)time(nullptr));
@@ -54,7 +54,7 @@ void DogCom::run()
 	{
         skt.init();
 	}
-	catch (DogcomSocketException e)
+    catch (DogcomSocketException& e)
 	{
 		qCritical() << "dogcom socket init error"
 					<< " msg: " << e.what();

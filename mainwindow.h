@@ -3,7 +3,7 @@
 
 #include <QDialog>
 #include <QSettings>
-#include <QRegExpValidator>
+#include <QRegularExpressionValidator>
 #include <dogcomcontroller.h>
 #include <QSystemTrayIcon>
 #include "singleapplication.h"
@@ -61,7 +61,7 @@ private:
 	// 用于在未登录时关闭窗口就退出
 	int CURR_STATE;
 
-	QRegExpValidator *macValidator;
+    QValidator *macValidator;
 	DogcomController *dogcomController;
 
 	// 设置托盘中的注销按钮的可用性
