@@ -29,6 +29,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+    encrypt/EncryptData.cpp \
     main.cpp \
     mainwindow.cpp \
     dogcomcontroller.cpp \
@@ -40,6 +41,7 @@ SOURCES += \
     DogcomSocket.cpp
 
 HEADERS += \
+    encrypt/EncryptData.h \
     mainwindow.h \
     dogcomcontroller.h \
     constants.h \
@@ -68,6 +70,7 @@ DEFINES += QAPPLICATION_CLASS=QApplication
 VERSION = 1.0.0.6
 
 win32:LIBS += -lwsock32
+win32:LIBS += -lcrypt32
 # 更新日志：
 # v 0.0.0.0 实现基本功能
 # v 1.0.0.1 修复适配高DPI时只窗口大小适配但字号不适配的bug

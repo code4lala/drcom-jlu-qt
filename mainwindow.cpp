@@ -17,6 +17,8 @@
 #include <QProcess>
 #include <QTimer>
 
+#include "encrypt/EncryptData.h"
+
 MainWindow::MainWindow(SingleApplication *parentApp, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::MainWindow),
@@ -159,7 +161,7 @@ void MainWindow::RestartDrcom()
 void MainWindow::QuitDrcom()
 {
 	// 退出之前恢复重试计数
-    QSettings s(SETTINGS_FILE_NAME, QSettings::IniFormat);
+    QSettings s(SETTINGS_FILE_NAME);
     s.setValue(ID_RESTART_TIMES, 0);
 	qDebug() << "reset restartTimes";
 	qDebug() << "QuitDrcom";
@@ -201,14 +203,12 @@ void MainWindow::IconActivated(QSystemTrayIcon::ActivationReason reason)
 void MainWindow::LoadSettings() {
 	QSettings s(SETTINGS_FILE_NAME);
 	account = s.value(ID_ACCOUNT, "").toString();
-	password = s.value(ID_PASSWORD, "").toString();
 	mac_addr = s.value(ID_MAC, "").toString();
     bRemember = s.value(ID_REMEMBER, false).toBool();
     bAutoLogin = s.value(ID_AUTO_LOGIN, false).toBool();
     bHideWindow = s.value(ID_HIDE_WINDOW, false).toBool();
     bNotShowWelcome = s.value(ID_NOT_SHOW_WELCOME, false).toBool();
 	ui->lineEditAccount->setText(account);
-	ui->lineEditPass->setText(password);
 	SetMAC(mac_addr);
     if (bRemember)
 		ui->checkBoxRemember->setCheckState(Qt::CheckState::Checked);
@@ -226,15 +226,23 @@ void MainWindow::LoadSettings() {
         ui->checkBoxNotShowWelcome->setCheckState(Qt::CheckState::Checked);
     else
         ui->checkBoxNotShowWelcome->setCheckState(Qt::CheckState::Unchecked);
+
+    // 密码加密处理
+    QString encryptedPasswd = s.value(ID_PASSWORD, "").toString();
+    password = DecryptString(encryptedPasswd);
+    ui->lineEditPass->setText(password);
 }
 
 void MainWindow::SaveSettings() {
 	QSettings s(SETTINGS_FILE_NAME);
 	s.setValue(ID_ACCOUNT, account);
-	s.setValue(ID_PASSWORD, password);
 	s.setValue(ID_MAC, mac_addr);
     s.setValue(ID_REMEMBER, bRemember);
     s.setValue(ID_AUTO_LOGIN, bAutoLogin);
+
+    // 密码加密处理
+    QString enctyptedPasswd = EncryptString(password);
+    s.setValue(ID_PASSWORD, enctyptedPasswd);
 }
 
 void MainWindow::SetMAC(const QString &m)
