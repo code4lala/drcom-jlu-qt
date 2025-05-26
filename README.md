@@ -3,16 +3,13 @@ drcom for jlu in qt cross platform
 
 跨平台 **win linux** [下载链接](https://github.com/code4lala/drcom-jlu-qt/releases)
 
-# 警告
-现在密码是明文保存，具体存在哪跟平台有关。用的QSettings存的，详情请参见官方文档：[https://doc.qt.io/qt-5/qsettings.html#platform-specific-notes](https://doc.qt.io/qt-5/qsettings.html#platform-specific-notes)
-
 # 功能对比
 | 功能                 | 官方 | 本版 | 说明                                                             |
 |----------------------|------|------|------------------------------------------------------------------|
 | 记住密码 自动登录    | √    | √    |                                                                  |
+| 密文保存密码         | √    | √    | Windows平台上采用 Windows 提供的 数据保护 API（DPAPI），保护仅当前账户能够解密数据，其他平台暂时使用简单的XOR加密 |
 |      <<<已知问题>>>    |      |       |                                          |
 | 多语言支持         | √    |      | 或许不会改进了...                                                  |
-| 密文保存密码         | √    |      | 待改进                                                           |
 | 被顶掉               | √    |      | 警告！巨大缺陷！本版掉线后会自动重启重新登录！所以顶不掉！待改进 |
 | 释放socket           | √    |      | 不是每次关机前都能保证释放socket，导致有时候会报端口已占用错误，待改进 |
 |      <<<优势>>>    |      |       |                                          |
