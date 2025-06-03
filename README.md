@@ -1,11 +1,8 @@
-此fork为macOS编译。
-
-*以下为原README*
-
 # drcom-jlu-qt
 drcom for jlu in qt cross platform
 
 跨平台 **win linux** [下载链接](https://github.com/code4lala/drcom-jlu-qt/releases)
+**macOS** [下载链接](https://github.com/jsy061030/drcom-jlu-qt-macOS/releases)
 
 # 功能对比
 | 功能                 | 官方 | 本版 | 说明                                                             |
