@@ -1,6 +1,6 @@
 此fork为macOS编译。
 
-'''原README.md'''
+*以下为原README*
 
 # drcom-jlu-qt
 drcom for jlu in qt cross platform
