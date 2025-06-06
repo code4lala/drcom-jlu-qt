@@ -2,6 +2,7 @@
 drcom for jlu in qt cross platform
 
 跨平台 **win linux** [下载链接](https://github.com/code4lala/drcom-jlu-qt/releases)
+**macOS** [下载链接](https://github.com/jsy061030/drcom-jlu-qt-macOS/releases)
 
 # 功能对比
 | 功能                 | 官方 | 本版 | 说明                                                             |
@@ -29,6 +30,7 @@ drcom for jlu in qt cross platform
 # 注意事项
 - 掉线后客户端自动重启重连尝试三次。自动重启登录成功后不弹窗口只最小化到托盘。注：自动重启功能依赖于“记住我”选项的勾选，否则没有账户密码自行重启也并没有什么用
 - 连接JLU.PC登录的时候mac地址随便填就可以，或者随便选一个网卡也可以，只有有线网要求mac地址和网络中心的一致
+- macOS上，可能会面临“未认证的开发者”之类的提示，这时打开系统，打开安全性与隐私，找到类似“仍要打开”类似的按钮按下，再次打开此app，即可运行。
 
 # 截图
 > WIN:
